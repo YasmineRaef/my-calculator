@@ -8,23 +8,23 @@ class MyCalc extends StatefulWidget {
 }
 
 class _MyCalcState extends State<MyCalc> {
-  int num1 = 0;
-  int num2 = 0;
+  double num1 = 0;
+  double num2 = 0;
   double tempNum = 0;
   String res = "";
   String op = "";
   String displayed = "";
 
-  bool ifContainDot(String test) {
-    for (int i = 0; i < test.length; i++) {
-      if (test[i] == '.') {
-        return true;
-      }
-    }
-    return false;
-  }
+  // bool ifContainDot(String test) {
+  //   for (int i = 0; i < test.length; i++) {
+  //     if (test[i] == '.') {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 
-  void myResult(String buttonTyped) {
+  myResult(String buttonTyped) {
     if (buttonTyped == 'AC') {
       num1 = 0;
       num2 = 0;
@@ -41,11 +41,11 @@ class _MyCalcState extends State<MyCalc> {
         buttonTyped == '-' ||
         buttonTyped == 'x' ||
         buttonTyped == '/') {
-      num1 = int.parse(displayed);
+      num1 = double.parse(displayed);
       op = buttonTyped;
       res = '';
     } else if (buttonTyped == '=') {
-      num2 = int.parse(displayed);
+      num2 = double.parse(displayed);
       if (op == '+') {
         res = (num1 + num2).toString();
       } else if (op == '-') {
@@ -62,16 +62,17 @@ class _MyCalcState extends State<MyCalc> {
     } else if (buttonTyped == 'BACK') {
       res = displayed.substring(0, displayed.length - 1);
     } else if (buttonTyped == '.') {
-      if (ifContainDot(displayed) == true) {
+      if (displayed.contains(".")) {
         res = displayed.substring(0, displayed.length - 1);
-      } else if (ifContainDot(displayed) == false) {
-        res = '$displayed.';
+      } else {
+        res = (double.parse(displayed + buttonTyped)).toString();
       }
     } else {
       res = int.parse(displayed + buttonTyped).toString();
     }
     setState(() {
       displayed = res;
+      //res = int.parse(displayed).toString();
     });
   }
 
